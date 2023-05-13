@@ -17,6 +17,7 @@
     <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
     <!-- Main Styling -->
     <link href="../assets/css/soft-ui-dashboard-tailwind.css?v=1.0.5" rel="stylesheet" />
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet" />
 
     <!-- Nepcha Analytics (nepcha.com) -->
     <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
@@ -38,7 +39,7 @@
                             type="button" aria-controls="navigation" aria-expanded="false"
                             aria-label="Toggle navigation">
                             <span
-                                class="inline-block mt-2 align-middle bg-center bg-no-repeat bg-cover w-6 h-6 bg-none">
+                                class="flex flex-col justify-around mt-2 align-middle bg-center bg-no-repeat bg-cover w-6 h-6 bg-none">
                                 <span bar1
                                     class="w-5.5 rounded-xs relative my-0 mx-auto block h-px bg-gray-600 transition-all duration-300"></span>
                                 <span bar2
@@ -77,7 +78,7 @@
                     >Online Builder</a
                   >
                 </li> --}}
-                            <ul class="hidden pl-0 mb-0 list-none lg:block lg:flex-row">
+                            <ul class="pl-0 mb-0 list-none lg:block lg:flex-row">
                                 <li>
                                     <a href="https://www.creative-tim.com/product/soft-ui-dashboard-tailwind"
                                         target="_blank"
@@ -92,6 +93,13 @@
         </div>
     </div>
     <main class="mt-0 transition-all duration-200 ease-soft-in-out">
+        {{-- @php
+            $alert = (object) [];
+            $alert->message = ['danger' => 'Hello', 'success' => 'world'];
+        @endphp --}}
+        @if (session()->has('alert'))
+            <x-alert :message="session()->get('alert')" level="info" />
+        @endif
         @yield('content');
     </main>
     <footer class="py-12">

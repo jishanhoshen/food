@@ -9,9 +9,8 @@
             <div class="container z-10">
                 <div class="flex flex-wrap justify-center -mx-3">
                     <div class="w-full max-w-full px-3 mx-auto mt-0 text-center lg:flex-0 shrink-0 lg:w-5/12">
-                        <h1 class="mt-12 mb-2 text-white">Welcome!</h1>
-                        <p class="text-white">Use these awesome forms to login or create new account in your project for
-                            free.</p>
+                        <h1 class="text-4xl mt-12 mb-2 text-white">Welcome!</h1>
+                        <p class="text-white">Popular recipes from around the world</p>
                     </div>
                 </div>
             </div>
@@ -88,37 +87,71 @@
                             </div>
                         </div>
                         <div class="flex-auto p-6">
-                            <form role="form text-left">
+                            <form role="form text-left" method="POST" action="{{ route('register') }}">
+                                @csrf
+                                <label class="mb-2 ml-1 font-bold text-xs text-slate-700">{{ __('Name') }}</label>
                                 <div class="mb-4">
                                     <input type="text"
-                                        class="text-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow"
-                                        placeholder="Name" aria-label="Name" aria-describedby="email-addon" />
+                                        class="text-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow @error('name') is-invalid @enderror"
+                                        placeholder="Name" aria-label="Name" aria-describedby="email-addon" name="name"
+                                        value="{{ old('name') }}" required autocomplete="name" autofocus />
                                 </div>
+                                @error('name')
+                                    @php
+                                        Session::flash('alert', ['danger' => $message]);
+                                    @endphp
+                                @enderror
+                                <label class="mb-2 ml-1 font-bold text-xs text-slate-700">{{ __('Email') }}</label>
                                 <div class="mb-4">
                                     <input type="email"
-                                        class="text-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow"
-                                        placeholder="Email" aria-label="Email" aria-describedby="email-addon" />
+                                        class="text-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow  @error('email') is-invalid @enderror"
+                                        placeholder="Email" aria-label="Email" aria-describedby="email-addon" name="email"
+                                        value="{{ old('email') }}" required autocomplete="email" />
                                 </div>
+                                @error('email')
+                                    @php
+                                        Session::flash('alert', ['danger' => $message]);
+                                    @endphp
+                                @enderror
+                                <label class="mb-2 ml-1 font-bold text-xs text-slate-700">{{ __('Password') }}</label>
                                 <div class="mb-4">
                                     <input type="password"
-                                        class="text-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow"
-                                        placeholder="Password" aria-label="Password" aria-describedby="password-addon" />
+                                        class="text-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow @error('password') is-invalid  @enderror"
+                                        placeholder="Password" aria-label="Password" aria-describedby="password-addon"
+                                        name="password" required autocomplete="new-password" />
                                 </div>
+                                @error('password')
+                                    @php
+                                        Session::flash('alert', ['danger' => $message]);
+                                    @endphp
+                                @enderror
+                                <label class="mb-2 ml-1 font-bold text-xs text-slate-700">{{ __('Confirm Password') }}</label>
+                                <div class="mb-4">
+                                    <input type="password"
+                                        class="text-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow @error('password') is-invalid  @enderror"
+                                        placeholder="Confirm Password" aria-label="Password" aria-describedby="password-addon"
+                                        name="password_confirmation" required autocomplete="new-password" />
+                                </div>
+                                @error('password')
+                                    @php
+                                        Session::flash('alert', ['danger' => $message]);
+                                    @endphp
+                                @enderror
                                 <div class="min-h-6 pl-6.92 mb-0.5 block">
                                     <input id="terms"
                                         class="w-4.92 h-4.92 ease-soft -ml-6.92 rounded-1.4 checked:bg-gradient-to-tl checked:from-gray-900 checked:to-slate-800 after:text-xxs after:font-awesome after:duration-250 after:ease-soft-in-out duration-250 relative float-left mt-1 cursor-pointer appearance-none border border-solid border-slate-200 bg-white bg-contain bg-center bg-no-repeat align-top transition-all after:absolute after:flex after:h-full after:w-full after:items-center after:justify-center after:text-white after:opacity-0 after:transition-all after:content-['\f00c'] checked:border-0 checked:border-transparent checked:bg-transparent checked:after:opacity-100"
-                                        type="checkbox" value="" checked />
+                                        type="checkbox" value="" required />
                                     <label class="mb-2 ml-1 font-normal cursor-pointer select-none text-sm text-slate-700"
                                         for="terms"> I agree the <a href="javascript:;"
                                             class="font-bold text-slate-700">Terms and Conditions</a> </label>
                                 </div>
                                 <div class="text-center">
-                                    <button type="button"
-                                        class="inline-block w-full px-6 py-3 mt-6 mb-2 font-bold text-center text-white uppercase align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer active:opacity-85 hover:scale-102 hover:shadow-soft-xs leading-pro text-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 bg-gradient-to-tl from-gray-900 to-slate-800 hover:border-slate-700 hover:bg-slate-700 hover:text-white">Sign
-                                        up</button>
+                                    <button type="submit"
+                                        class="inline-block w-full px-6 py-3 mt-6 mb-2 font-bold text-center text-white uppercase align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer active:opacity-85 hover:scale-102 hover:shadow-soft-xs leading-pro text-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 bg-gradient-to-tl from-gray-900 to-slate-800 hover:border-slate-700 hover:bg-slate-700 hover:text-white">{{ __('Sign Up') }}</button>
                                 </div>
                                 <p class="mt-4 mb-0 leading-normal text-sm">Already have an account? <a
-                                        href="../pages/sign-in.html" class="font-bold text-slate-700">Sign in</a></p>
+                                        href="{{ route('login') }}"
+                                        class="font-bold text-slate-700">{{ __('Sign In') }}</a></p>
                             </form>
                         </div>
                     </div>
